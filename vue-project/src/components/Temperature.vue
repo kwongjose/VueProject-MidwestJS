@@ -1,11 +1,13 @@
 <template>
     <div class="temperature">
-        <input type="range" :min="min" :max="max"
-        :value="value" 
-        @input="handleInput" 
-        :style="{backgroundColor: color}"
-        class="temp"
-        />
+        <input
+            :min="min"
+            :max="max"
+            :style="{backgroundColor: color}"
+            :value="value"
+            @input="handleInput"
+            type="range"
+        /> 
         <div class="labels">
             <div> {{ min }} </div>
             <div>temperature: {{ value }}F</div>
@@ -20,15 +22,15 @@ export default {
     props: {
         cold: {
             type: Number,
-            require: true,
+            required: true
         },
         hot: {
             type: Number,
-            required: true,
+            required: true
         },
         max: {
             type: Number,
-            default: 110,
+            default: 100
         },
         min: {
             type: Number,
@@ -38,30 +40,30 @@ export default {
             type: Number,
             default: 0
         }
-    },
+ },
 
-    date() {
+    data() {
         return {
-            value: this.temperature,
+            value: this.temperature
         };
     },
 
     computed: {
         color() {
-            return this.evaluation === "cold"
-                ? "blue"
-                : this.evaluation === "hot"
-                ? "red"
-                : "green";
+            return this.evaluation === 'cold'
+                ? 'blue'
+                : this.evaluation === 'hot'
+                ? 'red'
+                : 'green';
         },
-        evaluation () {
+        evaluation() {
             return this.value <= this.cold
-                ? "cold"
+                ? 'cold'
                 : this.value >= this.hot
-                ? "hot"
-                : "comfortable";
-        },
-    },
+                ? 'hot'
+                : 'comfortable';
+            }
+        }, 
 
     methods: {
         handleInput(event) {
@@ -72,25 +74,22 @@ export default {
 }
 </script>
 
-<style scroped>
+<style scoped>
 .evaluation {
-    display: flex;
-    font-weight: bold;
-    justify-content: center;
+ display: flex;
+ font-weight: bold;
+ justify-content: center;
 }
-
 input {
-    appearance: none;
-    background-color: gray;
-    width: 100%;
+ appearance: none;
+ background-color: gray;
+ width: 100%;
 }
-
 .labels {
-    display: flex;
-    justify-content: space-between;
+ display: flex;
+ justify-content: space-between;
 }
-
 .temperature {
-    width: 100%;
+ width: 100%;
 }
 </style>

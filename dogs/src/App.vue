@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <Dogs :dogies="dogList"></Dogs>
+    <nav>
+      <router-link to="/about">About</router-link>
+      <router-link to="/dogs">Dogs</router-link>
+    </nav>
+<router-view />
   </div>
 </template>
 
 <script>
-import Dogs from './components/Dogs.vue'
 
 export default {
   name: 'app',
   components: {
-    Dogs
+
   },
 
   data () {
@@ -29,5 +32,23 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+#app > div {
+ padding: 20px;
+}
+body {
+ margin: 0;
+}
+nav {
+ border-bottom: solid gray 1px;
+ padding: 20px;
+}
+nav a {
+ font-size: 24px;
+ margin-right: 20px;
+ text-decoration: none;
+}
+nav a.router-link-exact-active {
+ color: green;
 }
 </style>

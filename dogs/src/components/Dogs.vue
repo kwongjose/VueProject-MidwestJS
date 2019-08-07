@@ -37,6 +37,11 @@ export default {
             name: ""
         }
     },
+
+    mounted () {
+        this.dogs = [ { name: "kitten" }, { name: "cat" } ]
+    },
+
     methods: {
         addDog() {
         // If a dog with that name is already present, do nothing.

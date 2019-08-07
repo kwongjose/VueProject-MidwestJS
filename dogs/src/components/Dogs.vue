@@ -3,15 +3,17 @@
         <table v-if="dogs.length != 0">
             <tr>
                 <th> name </th>
+                <th> Actions </th>
             </tr>
             <tr v-for="dog in dogs" :key="dog.name">
                 <td> {{ dog.name }} </td>
+                <td> <button @click="removeDog">REMOVE</button> </td>
             </tr>
         </table>
         <div>
             <lable>Name</lable>
             <input type="text" v-model="name" @keypress.enter="addDog">
-            <button @click="addDog">Add</button>
+            <button @click="addDog(dog)">Add</button>
         </div>
     </div>
 </template>
@@ -44,6 +46,11 @@ export default {
         } 
         this.name = "";
         },
+        removeDog (dog) {
+           const index = this.dogs.findIndex((item) => item.name === dog);
+           this.dogs.splice(index, 1);
+
+        }
     }
 };
 </script>

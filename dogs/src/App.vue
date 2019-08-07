@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Dogs></Dogs>
+    <Dogs :dogs="dogList"></Dogs>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default {
   name: 'app',
   components: {
     Dogs
+  },
+
+  data () {
+    return {
+      dogList: [ { name: "pig" }, { name: "cat" } ]
+    }
   }
 }
 </script>

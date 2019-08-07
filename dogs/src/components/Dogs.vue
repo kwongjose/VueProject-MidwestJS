@@ -22,6 +22,13 @@ function sortDogs(dogs) {
     return dogs;
 }
 export default {
+
+    props: {
+        dogs: {
+            type: Array,
+            required: true
+        }
+    },
     data() {
         return {
             dogs: [],

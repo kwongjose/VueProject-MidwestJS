@@ -7,7 +7,7 @@
             </tr>
             <tr v-for="dog in dogs" :key="dog.name">
                 <td> {{ dog.name }} </td>
-                <td> <button @click="removeDog">REMOVE</button> </td>
+                <td> <button @click="removeDog(dog)">&#x1f5d1;</button> </td>
             </tr>
         </table>
         <div>
@@ -19,6 +19,9 @@
 </template>
 
 <script>
+// const URL_STR = null;
+const URL_STR = 'http://localhost:1919/dog';
+
 function sortDogs(dogs) {
     dogs.sort((dogA, dogB) => dogA.name.localeCompare(dogB.name))
     return dogs;
@@ -38,23 +41,52 @@ export default {
         }
     },
 
-    mounted () {
-        this.dogs = [ { name: "kitten" }, { name: "cat" } ]
+    async mounted () {
+        try {
+            if (URL_STR) {
+                const res = await fetch(URL_STR);
+                if (!res.ok) throw new Error(res.statusText);
+                this.dogs = sortDogs(await res.json());
+            } else {
+                this.dogs = [ { name: "kitten" }, { name: "cat" } ]
+            }
+        } catch (e) {
+            // console.error('error getting dogs:', e.message);
+        }
+       // this.dogs = [ { name: "kitten" }, { name: "cat" } ]
     },
 
     methods: {
-        addDog() {
-        // If a dog with that name is already present, do nothing.
-        const exists = this.dogs.some(dog => dog.name === this.name);
-        if (!exists) {
-            this.dogs = sortDogs(this.dogs.concat({name: this.name}));  
-        } 
-        this.name = "";
-        },
-        removeDog (dog) {
-           const index = this.dogs.findIndex((item) => item.name === dog);
-           this.dogs.splice(index, 1);
 
+        /**
+         * Adds a dog to both the local list and remote
+         */
+        async addDog() {
+            // If a dog with that name is already present, do nothing.
+            const exists = this.dogs.some(dog => dog.name === this.name);
+            if (!exists) {
+                if (URL_STR) {
+                    const res = await fetch(URL_STR, {method: "POST", body: this.name });
+                    const dog = await res.json(); 
+                    this.dogs = sortDogs(this.dogs.concat(dog));  
+                } else {
+                    this.dogs = sortDogs(this.dogs.concat( { name: this.name } ));
+                }
+
+            } 
+            this.name = "";
+        },
+
+        /**
+         * Removes a dog from both remote list and local model
+         */
+        async removeDog (dog) {
+            const index = this.dogs.findIndex((item) => item.id === dog.id);
+            if (URL_STR) {
+                await fetch(`${URL_STR}/${dog.id}`, { method: "DELETE"});
+            }
+
+            this.dogs.splice(index, 1);
         }
     }
 };

@@ -11,7 +11,7 @@
             </tr>
         </table>
         <div>
-            <lable>Name</lable>
+            <label>Name</label>
             <input type="text" v-model="name" @keypress.enter="addDog">
             <button @click="addDog(dog)">Add</button>
         </div>
@@ -26,14 +26,14 @@ function sortDogs(dogs) {
 export default {
 
     props: {
-        dogs: {
+        dogies: {
             type: Array,
-            required: true
+            required: true,
         }
     },
     data() {
         return {
-            dogs: [],
+            dogs: this.dogies,
             name: ""
         }
     },

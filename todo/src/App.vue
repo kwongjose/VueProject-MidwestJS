@@ -1,22 +1,17 @@
 <template>
   <div id="app">
-    <Dogs :dogies="dogList"></Dogs>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import Dogs from './components/Dogs.vue'
+import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'app',
   components: {
-    Dogs
-  },
-
-  data () {
-    return {
-      dogList: [ { name: "pig" }, { name: "cat" } ]
-    }
+    HelloWorld
   }
 }
 </script>
